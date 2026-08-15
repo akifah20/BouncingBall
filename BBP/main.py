@@ -37,6 +37,7 @@ radius = 20
 
 #pygame setup
 window = pygame.display.set_mode(size=(WIDTH,HEIGHT)) 
+clock = pygame.time.Clock()
 is_running = True
 
 while is_running:
@@ -47,8 +48,8 @@ while is_running:
             is_running = False
 
     #update state: new position = old position + velocity
-    x = x + vx  
-    y = y + vy 
+    x = x + vx  #2 pixels horizontally per loop
+    y = y + vy  #5 pixels vertically per loop
 
     #collision detection/response
     if x + radius >= WIDTH : 
@@ -70,6 +71,8 @@ while is_running:
 
     #Display
     pygame.display.update() # Draws the surface object to the screen.
+    #control FPS
+    clock.tick(60) #run this loop 60 times per second - 60 frames per sec. slows down the whole process.
            
 pygame.quit()
 #pygame.event.get() = collecting everything the user has done since the last frame.
