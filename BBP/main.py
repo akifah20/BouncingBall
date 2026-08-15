@@ -16,33 +16,61 @@ Think of this as the “controller” of the program.
 import pygame
 pygame.init() #initiate pygame and give permission to use pygame's functionality.
 
-blue = (0,0,255)
-(width,height) =  300,500
+"""
+Process input
+Update state - #State = data that describes your world at this moment / describe the current situation.
+Collision detection/response
+Render - #rendering = Take the current state and display it on the screen
+Display
+"""
 
-x = 1
+#game settings - describe the environment. CAPITALISED ∵ they're treated as fixed configuration.
+(WIDTH, HEIGHT) =  300,500
+BLUE = (0,0,255) 
+
+#ball states - can change hence lower case.
+x = 100
 y = 100
-vx = 2 #horizontal velocity
-vy = 0 #vertical velocity 
-radius = 65
+vx = 2
+vy = 5
+radius = 20
 
-window = pygame.display.set_mode(size=(width,height)) 
+#pygame setup
+window = pygame.display.set_mode(size=(WIDTH,HEIGHT)) 
 is_running = True
-while is_running:
-    window.fill((0,0,0))  #clears a graphical surface/screen by painting it entirely in black//black background, redrawn every frame / this is what i was MISSING. //why does the circle need to be drawn every frame? Part of the answer is: because you also need to erase the previous frame every time, otherwise old frames pile up visually.
-    #if x + radius < width and width > 0 : 
-    x = x + vx  # new position = old position + velocity 
-    pygame.draw.circle(window, blue, (x,y), radius) 
-    pygame.display.update() # Draws the surface object to the screen.
-        
-    if x + radius >= width and width > 0 : 
-        vx = -2 #this causes negative velocity. so now we use this value instead.
 
-    elif x - radius == 0 : 
-        vx = 2
-        
-    for event in pygame.event.get(): #event = user action such as closing window, key presses, mouse clicks
+while is_running:
+
+    #Process input
+    for event in pygame.event.get(): #event = user action such as closing window, key presses, mouse clicks # this is the PROCESS INPUT
         if event.type == pygame.QUIT:
             is_running = False
+
+    #update state: new position = old position + velocity
+    x = x + vx  
+    y = y + vy 
+
+    #collision detection/response
+    if x + radius >= WIDTH : 
+        vx = -vx
+
+    elif x - radius <= 0 : 
+        vx = -vx #(- and - becomes + )
+
+    if y + radius >= HEIGHT : 
+        vy = -vy
+    
+    elif y - radius <= 0 :
+        vy = -vy #(- and - becomes + )
+
+    print(vx, vy)
+    #Render
+    window.fill((0,0,0))  #clears a graphical surface/screen by painting it entirely in black//black background, redrawn every frame / this is what i was MISSING. //why does the circle need to be drawn every frame? Part of the answer is: because you also need to erase the previous frame every time, otherwise old frames pile up visually. 
+    pygame.draw.circle(window, BLUE, (x,y), radius) #center: (x, y). window - The target surface or screen where the circle appears.
+
+    #Display
+    pygame.display.update() # Draws the surface object to the screen.
+           
 pygame.quit()
 #pygame.event.get() = collecting everything the user has done since the last frame.
 
@@ -51,4 +79,6 @@ pygame.quit()
 
 
 
-# position = previous position * velocity 
+#position = old position * velocity 
+#rendering - showing the world
+#state = changing the world
