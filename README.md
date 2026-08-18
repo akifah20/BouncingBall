@@ -1,4 +1,5 @@
-#wht project does
-#controls
-#how to run it - pip install pygame
-#python main.py
+
+#how to run it:
+
+pip install pygame - once
+python main.py - run each time
