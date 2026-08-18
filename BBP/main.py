@@ -59,7 +59,7 @@ def update(x,y,vx,vy):
 
         return x,y,vx,vy
 
-def render():
+def render(x,y):
      #Render
     window.fill((0,0,0))  #clears a graphical surface/screen by painting it entirely in black//black background, redrawn every frame / this is what i was MISSING. //why does the circle need to be drawn every frame? Part of the answer is: because you also need to erase the previous frame every time, otherwise old frames pile up visually. 
     pygame.draw.circle(window, BLUE, (x,y), radius) #center: (x, y). window - The target surface or screen where the circle appears.
@@ -76,7 +76,7 @@ while is_running:
 
     is_running = process_input(is_running)
     x,y,vx,vy = update(x,y,vx,vy)
-    render()
+    render(x,y)
     display()
    
 
